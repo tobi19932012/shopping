@@ -8,6 +8,7 @@ class AuthController
 {
     public function login()
     {
+        die("12313");
         // Kiểm tra xem người dùng có gửi dữ liệu qua form POST không
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Giả sử đây là dữ liệu đăng nhập của người dùng

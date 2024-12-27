@@ -26,7 +26,8 @@ class Router
     public static function route($url, $method)
     {
 
-//        var_dump($url, $method);
+//        var_dump(self::$routes[$method]);
+//        die;
 //        var_dump(self::$routes, $url);
 //        die;
         if (isset(self::$routes[$method][$url])) {
