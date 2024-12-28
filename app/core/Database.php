@@ -13,7 +13,7 @@ class Database
     private $host = 'localhost';
     private $username = 'root';
     private $password = '';
-    private $database = 'mvc_example';
+    private $database = 'shop';
 
     private function __construct()
     {
@@ -33,6 +33,44 @@ class Database
             self::$instance = new Database();
         }
         return self::$instance;
+    }
+
+    public function fetchAll($sql, $params = [])
+    {
+        $stmt = $this->connection->prepare($sql);
+
+        if ($params) {
+            $types = str_repeat('s', count($params)); // Định dạng các tham số (s = string)
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result === false) {
+            return false;
+        }
+
+        return $result->fetch_all(MYSQLI_ASSOC); // Trả về mảng kết quả
+    }
+
+    // Phương thức lấy một bản ghi duy nhất
+    public function fetchOne($sql, $params = []) {
+        $stmt = $this->connection->prepare($sql);
+
+        if ($params) {
+            $types = str_repeat('s', count($params));
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result === false) {
+            return null;
+        }
+
+        return $result->fetch_assoc(); // Trả về bản ghi đầu tiên dưới dạng mảng kết hợp
     }
 
     // Lấy kết nối

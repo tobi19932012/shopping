@@ -1,17 +1,17 @@
 <?php
 
-namespace Controllers\Frontend;
+namespace controllers\frontend;
 
-require_once '../app/controllers/frontend/BaseController.php';
 class HomeController extends BaseController
 {
     public function index()
     {
+        die("1231");
         $data = [
             'title' => 'Trang chủ',
             'welcome_message' => 'Chào mừng bạn đến với trang chủ!',
         ];
 
-        $this->render('frontend/pages/home', $data);
+        $this->renderFrontend('frontend/pages/home', $data);
     }
 }

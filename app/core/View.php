@@ -7,7 +7,7 @@ class View
     public static function render($view, $data = [])
     {
         // Chuyển mảng dữ liệu thành các biến
-//        extract($data);
+        extract($data);
 
         // Đường dẫn tới file view
         $viewFile = "../app/views/" . $view . ".php";
