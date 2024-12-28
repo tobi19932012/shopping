@@ -14,7 +14,7 @@ $(document).ready(function () {
             $("body").append($form);
             $form.submit();
         } else {
-            console('Không xóa user');
+            console.log('Không xóa user');
         }
     });
 });
