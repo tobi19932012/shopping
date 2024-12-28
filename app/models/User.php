@@ -4,28 +4,30 @@ namespace Models;
 
 //use Core\Database;
 
+use Core\Database;
+
 class User
 {
     private $db;
-
+    private $table = 'users';
     public function __construct()
     {
-        // Lấy kết nối cơ sở dữ liệu
-//        $this->db = Database::getInstance()->getConnection();
+        $this->db = Database::getInstance();
     }
 
     // Lấy danh sách tất cả người dùng
-    public function getAllUsers()
+    public function getAll()
     {
-//        $query = "SELECT id, name, email FROM users";
-//        $result = $this->db->query($query);
-//
-//        if ($result->num_rows > 0) {
-//            return $result->fetch_all(MYSQLI_ASSOC);
-//        }
+        $query = "SELECT * FROM $this->table WHERE role ='2'";
+        $result = $this->db->fetchAll($query);
+        return $result;
+    }
 
-        return [
-            ['id' => 0, 'name' => "123213", 'email' => "12313"],
-        ];
+    /**
+     * @return bool
+     */
+    public function delete($id)
+    {
+        return $this->db->deleteById($this->table, $id);
     }
 }

@@ -2,22 +2,23 @@
 
 namespace Controllers\Backend;
 
-use controllers\BackendController;
+use controllers\BaseController;
 
-class DashboardController extends BackendController
+class DashboardController extends BaseController
 {
 
     public function __construct()
     {
-        parent::__construct();
+        parent::checkUserBackend();
     }
 
     public function index()
     {
+        $data = [
+            'title' => 'Trang chủ',
+            'welcome_message' => 'Chào mừng bạn đến với trang chủ!',
+        ];
+        $this->renderBackend('backend/dashboard', $data);
 
-        session_start(); // Khởi tạo session
-
-        var_dump($_SESSION);
-//        session_destroy();
     }
 }

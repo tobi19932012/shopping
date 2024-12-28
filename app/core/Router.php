@@ -1,6 +1,7 @@
 <?php
 
 namespace Core;
+require_once '../app/controllers/BaseController.php';
 
 class Router
 {
@@ -37,7 +38,6 @@ class Router
 
             // Include controller class
             $controllerName = "\\Controllers\\" . $controllerName;
-
             // Tạo đối tượng controller và gọi phương thức action
             $controller = new $controllerName();
             $controller->$actionName();

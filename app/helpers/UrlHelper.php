@@ -7,7 +7,7 @@ class UrlHelper
     // Tạo URL đầy đủ dựa trên đường dẫn
     public static function baseUrl($path = '')
     {
-        $base = 'https://localhost/shopping/public';
+        $base = 'https://shopping';
         return rtrim($base, '/') . '/' . ltrim($path, '/');
     }
 
@@ -16,5 +16,17 @@ class UrlHelper
     {
         header("Location: " . self::baseUrl($url));
         exit;
+    }
+
+    public static function trimmedUri()
+    {
+        // Lấy phần URI từ $_SERVER['REQUEST_URI']
+        $requestUri = $_SERVER['REQUEST_URI'];
+
+        // Loại bỏ dấu "/" ở đầu nếu cần
+        $trimmedUri = ltrim($requestUri, '/');
+
+        // Hiển thị kết quả
+        return $trimmedUri;
     }
 }

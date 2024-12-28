@@ -15,7 +15,6 @@ class AuthController
         $this->db = Database::getInstance();
         session_start(); // Khởi động phiên làm việc
 
-        die($_SESSION);
             // Kiểm tra nếu chưa đăng nhập, chuyển hướng về trang login
         if (!empty($_SESSION['logged_in'])) {
             header('Location: /admin');

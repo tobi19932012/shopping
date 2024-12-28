@@ -73,9 +73,22 @@ class Database
         return $result->fetch_assoc(); // Trả về bản ghi đầu tiên dưới dạng mảng kết hợp
     }
 
+    public function deleteById($table, $id) {
+        $query = "DELETE FROM $table WHERE id = ?";
+        $stmt = $this->connection->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("i", $id); // Bind giá trị $id với kiểu integer
+            return $stmt->execute();    // Thực thi câu lệnh
+        } else {
+            return false;
+        }
+    }
+
     // Lấy kết nối
     public function getConnection()
     {
         return $this->connection;
     }
+
 }
