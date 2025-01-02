@@ -1,7 +1,6 @@
 <?php
 
 namespace Core;
-require_once '../app/controllers/BaseController.php';
 
 class Router
 {
@@ -26,11 +25,8 @@ class Router
     // Xử lý route dựa trên phương thức HTTP
     public static function route($url, $method)
     {
-
-//        var_dump(self::$routes[$method]);
-//        die;
-//        var_dump(self::$routes, $url);
-//        die;
+        $url = parse_url($url, PHP_URL_PATH);
+        $method = strtoupper($method);
         if (isset(self::$routes[$method][$url])) {
             $action = self::$routes[$method][$url];
             $controllerName = $action['controller'];
@@ -42,7 +38,8 @@ class Router
             $controller = new $controllerName();
             $controller->$actionName();
         } else {
-            die("Route not found: $url with method $method");
+            View::render('404');
+//            die("Route not found: $url with method $method");
         }
     }
 }

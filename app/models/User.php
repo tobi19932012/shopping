@@ -23,6 +23,14 @@ class User
         return $result;
     }
 
+    // Lấy danh sách tất cả người dùng
+    public function find($id)
+    {
+        $query = "SELECT * FROM $this->table WHERE role ='2' AND id = ?";
+        $result = $this->db->fetchOne($query, [$id]);
+        return $result;
+    }
+
     /**
      * @return bool
      */

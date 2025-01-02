@@ -7,7 +7,7 @@ class UrlHelper
     // Tạo URL đầy đủ dựa trên đường dẫn
     public static function baseUrl($path = '')
     {
-        $base = 'https://shopping';
+        $base = "https://".$_SERVER['SERVER_NAME']  .'/';
         return rtrim($base, '/') . '/' . ltrim($path, '/');
     }
 

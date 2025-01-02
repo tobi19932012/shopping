@@ -56,6 +56,8 @@ class Database
 
     // Phương thức lấy một bản ghi duy nhất
     public function fetchOne($sql, $params = []) {
+//        var_dump(1231, $sql);
+//        die;
         $stmt = $this->connection->prepare($sql);
 
         if ($params) {
@@ -85,10 +87,43 @@ class Database
         }
     }
 
-    // Lấy kết nối
-    public function getConnection()
-    {
-        return $this->connection;
-    }
+    /**
+     * Hàm chung để chèn dữ liệu vào bảng
+     *
+     * @param string $table Tên bảng
+     * @param array $data Dữ liệu cần chèn (key là tên cột, value là giá trị)
+     * @return bool|int Trả về ID của bản ghi vừa thêm hoặc false nếu thất bại
+     */
+    public function insert($table, $data) {
+        // Tạo chuỗi cột và giá trị
+        $columns = implode(", ", array_keys($data));
+//        var_dump($data, $columns);
+//        die;
+        $placeholders = implode(", ", array_fill(0, count($data), '?'));
 
+        // Câu lệnh SQL
+        $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+
+        // Chuẩn bị câu lệnh
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            echo "Prepare failed: " . $this->connection->error;
+            return false;
+        }
+
+        // Ràng buộc các giá trị (bind values)
+        $types = str_repeat('s', count($data)); // Tất cả giá trị được giả định là chuỗi
+        $stmt->bind_param($types, ...array_values($data));
+
+        // Thực thi câu lệnh
+        if ($stmt->execute()) {
+            $insertId = $stmt->insert_id;
+            $stmt->close();
+            return $insertId; // Trả về ID của bản ghi vừa thêm
+        } else {
+            echo "Execute failed: " . $stmt->error;
+            $stmt->close();
+            return false;
+        }
+    }
 }

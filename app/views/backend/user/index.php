@@ -25,7 +25,7 @@
                             <td><?= !empty($value['phone']) ? $value['phone'] : 'Chưa cập nhật' ?></td>
                             <td><?= !empty($value['email']) ? $value['email'] : 'Chưa cập nhật' ?></td>
                             <td>
-                                <a href="#" title="Sửa" class="btn btn-warning btn-circle btn-sm">
+                                <a href="/admin/user/edit?id=<?= $value['id']?>" title="Sửa" class="btn btn-warning btn-circle btn-sm">
                                     <i class="fas fa-pen"></i>
                                 </a>
                                 <a href="javascript:void(0)" data-id="<?= $value['id'] ?>" title="Xóa"

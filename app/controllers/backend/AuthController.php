@@ -4,6 +4,7 @@ namespace Controllers\Backend;
 
 use Core\View;
 use Core\Database;
+use Helpers\UrlHelper;
 
 class AuthController
 {
@@ -26,6 +27,10 @@ class AuthController
     public function loginForm()
     {
         View::render('backend/auth/login');
+    }
+
+    public function registerForm() {
+        View::render('backend/auth/register');
     }
 
     // Kiểm tra người dùng đã đăng nhập
@@ -62,16 +67,29 @@ class AuthController
             $_SESSION['phone'] = $user['phone'] ?? '';
             $_SESSION['email'] = $user['email'] ?? '';
 
-            header('Location: /admin');
+            UrlHelper::redirect('/admin');
         } else {
             $_SESSION['message_error'] = "Tài khoản hoặc mặt khẩu không đúng";
-            header('Location: /admin/login');
+//            header('Location: /admin/login');
+            UrlHelper::redirect('/admin/login');
         }
+    }
+
+    public function register() {
+        $data = $_POST;
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $result =  $this->db->insert("users", $data);
+        if ($result) {
+            UrlHelper::redirect('/admin/login');
+        } else {
+            echo "Thêm dữ liệu thất bại.";
+        }
+        die;
     }
 
     public function logout()
     {
         session_destroy(); // Hủy session
-        header('Location: /admin/login'); // Chuyển về trang login
+        UrlHelper::redirect('/admin/login'); // Chuyển về trang login
     }
 }
